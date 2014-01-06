@@ -71,11 +71,13 @@ According to WCAG 2.0 "the reading order of a PDF document is the tag order of d
 = Issues =
 
 The `accessibility` package seems to be a good approach to making an accessible PDF with the current `sigchi.cls` template. However, I found a number of inconsistencies:
-  * `\subparagraph` is defined in `sigchi.cls` but not in `accessibility.sty`. This throws a warning while compiling with pdflatex.
-  * `\theindex` and `\@idxitem` are defined in `accessibility.sty` but not in `sigchi.cls`. This also throws a warning while compiling with pdflatex.
-  * When setting a subfloat caption (using `\subfloat[caption text]{}` from the `subfig` package), floating elements are typesetted as block elements. A workaround for this is using a tabular environment instead, but it is not very elegant. Perhaps there is a package elsewhere that do not clash with `accessibility.sty`.
+  * You must set `\pagenumbering{arabic}` and then set `\pagestyle{empty}` right after `\begin{document}`. Otherwise `pdflatex` will not compile the document.
+  * `\subparagraph` is defined in `sigchi.cls` but not in `accessibility.sty`. This throws a compiler warning.
+  * `\theindex` and `\@idxitem` are defined in `accessibility.sty` but not in `sigchi.cls`. This also throws a compiler warning.
+  * When setting a subfloat caption (using `\subfloat[caption text]{}` from the `subfig` package), floating elements are typesetted as block elements. A workaround for this is using a tabular environment instead, but it is not very elegant. Perhaps there is a graphics package elsewhere that does not clash with `accessibility.sty`.
+  * The `tabular` environment is augmented with an extra row at the bottom. You can save vertical space either using `\renewcommand{\arraystretch}{0.5}` or putting a negative vspace (e.g. `\vspace{-1em}`) after `\end{tabular}`.
 
-You might want to suppress warnings while compiling by using the `interaction` flag in `pdflatex`:
+You might want to suppress warnings while compiling by using the `interaction=nonstopmode` flag in `pdflatex`:
 {{{
 pdflatex -interaction=nonstopmode paper.tex
 }}}
@@ -88,6 +90,7 @@ On another line, `accessibility.sty` sets `\pdfcompresslevel=0` so the resulting
 
 
 = Ideas =
+
   * Update the accessibility package and host it at CTAN, so that everyone can download a common version.
   * Rewrite the `sigchi.cls` template so that it can support these accessibility guidelines "natively" (plus, the template is a bit outdated so it is an opportunity to make it simpler).
   * Use the LaTeX built-in `article` class and use a custom STY file instead.
