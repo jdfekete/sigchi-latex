@@ -54,6 +54,7 @@ This guideline should have been provided in the first place. Just load the `acce
 {{{
 \usepackage[tagged]{accessibility}
 }}}
+Be sure that this package is loaded at the very last, as it rewrites many LaTeX macros.
 
 4. [http://chi2014.acm.org/authors/verify-the-default-language Verify the default language]
 
@@ -93,9 +94,16 @@ On another line, `accessibility.sty` sets `\pdfcompresslevel=0` so the resulting
 
   * Update the accessibility package and host it at CTAN, so that everyone can download a common version.
   * Rewrite the `sigchi.cls` template so that it can support these accessibility guidelines "natively" (plus, the template is a bit outdated so it is an opportunity to make it simpler).
-  * Use the LaTeX built-in `article` class and use a custom STY file instead.
+  * Use the LaTeX built-in `article` class and use a custom STY file instead with all required stuff built-in.
   * Do nothing while compiling the PDF and post-process it using open source tools, if available.
   * More?
+
+= Updates = 
+
+Andy Clifton has performed some changes to the original `accessibility` package. It seems that some issues has been fixed, though I didn't test his reworked `accessibility_meta` package yet. Suggestion: [https://github.com/AndyClifton/AccessibleMetaClass/blob/master/accessibility_meta.sty Download the modified accessibility package] and load it on the preamble as indicated before:
+{{{
+\usepackage[tagged]{accessibility_meta}
+}}}
 
 = End Notes =
 
